@@ -1,0 +1,7 @@
+<h1><%= @congress.number %> <%= @congress.chamber %></h1>
+
+<ul>
+<% for member in @members  %>
+  <li><%= member.name %></li>
+<% end %>
+</ul>

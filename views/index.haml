@@ -1,0 +1,6 @@
+%h1 @member.inspect
+
+- @members.each do |member|
+  %p= member.first.to_yaml
+  
+%p See, I can count!
