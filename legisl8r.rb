@@ -4,7 +4,7 @@ require 'haml'
 require 'ny-times-congress'
 
 include NYTimes::Congress
-NYTimes::Congress::Base.api_key = ENV['NY_TIMES_CONGRESS_API_KEY']
+Base.api_key = ENV['NY_TIMES_CONGRESS_API_KEY']
 
 get '/' do
   @joe = Legislator.find('B000444')
@@ -23,9 +23,10 @@ get '/congress/:chamber/:session/members' do
   @members = @congress.members.values
   erb :index
 end
-
-get '/congress/:chamber/:session/members' do
+      # congress/senate/110/members/S000770/compare/D000563
+get '/congress/:chamber/:session/members/:legislator_1/compare/:legislator_2' do
   @congress = Congress.new(params[:session], params[:chamber])
-  @members = @congress.members.values
-  erb :index
+  @legislator_1, @legislator_2 = Legislator.find(params[:legislator_1]), Legislator.find(params[:legislator_2])
+  @comparison = @congress.compare(@legislator_1, @legislator_2)
+  erb :compare
 end
